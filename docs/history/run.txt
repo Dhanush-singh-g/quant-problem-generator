@@ -1,0 +1,157 @@
+cd backend 
+py -3.10 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python --version        -- confirm if pytohn using version 3.10
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip list
+
+cd ..
+Get-ChildItem -Force .env*  -- check if .env exists
+Copy-Item .env.example .env  -- chreate a .env file 
+Put teh value fo gemini api key , postgresql and assignment key and jwt secreat 
+run:
+python -c "from dotenv import load_dotenv; load_dotenv(); import os; from sqlalchemy import create_engine, text; e=create_engine(os.environ['DATABASE_URL']); c=e.connect(); print(c.execute(text('SELECT version()')).scalar()); c.close(); print('DATABASE CONNECTION: OK')"
+To check if db is connnected proeprly 
+
+run:
+python -c "from dotenv import load_dotenv; load_dotenv(); import os; from sqlalchemy import create_engine, inspect; e=create_engine(os.environ['DATABASE_URL']); i=inspect(e); print('\n'.join(sorted(i.get_table_names())))"
+Check currnet table before migration 
+
+run:
+Get-ChildItem -Recurse -Filter "MIGRATION*.sql" | Select-Object FullName 
+to know verious migration files within root 
+
+run:
+Get-Content .\MIGRATION_PRACTICE_MODE.sql
+
+and teh query you get run in supabase adn then comeback to supabase to ensure you have migrated 
+
+run:
+python -c "from dotenv import load_dotenv; load_dotenv(); import os; from sqlalchemy import create_engine, inspect; e=create_engine(os.environ['DATABASE_URL']); i=inspect(e); print('user_question_history:', i.has_table('user_question_history')); print('columns:'); print('\n'.join(c['name'] for c in i.get_columns('user_question_history')))"
+
+
+
+Now moving to redis 
+
+run:
+python -c "from dotenv import load_dotenv; load_dotenv(); import os, redis; r=redis.from_url(os.environ['REDIS_URL'], decode_responses=True); print('PING:', r.ping()); r.set('quantforge:test','working',ex=30); print('READ:',r.get('quantforge:test')); print('REDIS CONNECTION: OK')"
+To check redis connected
+
+
+run:
+python -c "from dotenv import load_dotenv; load_dotenv(); import os; from google import genai; client=genai.Client(api_key=os.environ['GEMINI_API_KEY']); r=client.models.generate_content(model=os.getenv('GEMINI_MODEL','gemini-3.5-flash-lite'), contents='Reply with exactly: QUANTFORGE_GEMINI_OK'); print(r.text)"
+gemini ok to run 
+
+run all the migrations adn ensure that it has applied adn tehn start teh backend 
+run:
+uvicorn app.main:app --reload
+
+
+
+in teh second terminal do :
+cd "C:\Users\dhanu\OneDrive\Desktop\NITTE Hackathon\Codex\V 5   QuantForge-AI-Manual-Factory-Profile-Analytics - final version\backend"
+
+.\.venv\Scripts\Activate.ps1
+
+
+start the worker 
+run:
+celery -A app.workers.celery_app:celery worker --loglevel=info --pool=solo -Q generation
+
+
+
+
+
+
+
+
+
+
+
+
+run:worker
+celery -A app.workers.celery_app:celery worker --loglevel=info --pool=solo -Q generation
+
+
+
+
+
+Fetch dat from db:
+SELECT
+    id,
+    domain,
+    difficulty,
+    story_text,
+    options,
+    correct_option,
+    canonical_solution,
+    answer_value,
+    answer_unit,
+    variables,
+    generation_metadata,
+    created_at
+FROM questions
+ORDER BY
+    CASE difficulty
+        WHEN 'easy' THEN 1
+        WHEN 'medium' THEN 2
+        WHEN 'hard' THEN 3
+        ELSE 4
+    END,
+    created_at ASC;
+
+
+delete data from db:
+DELETE FROM assessment_question_assignments;
+DELETE FROM user_question_history;
+DELETE FROM questions;
+
+chcek deleted data:
+SELECT COUNT(*) FROM questions;
+
+
+
+
+delete data from redis :
+DEL metrics:question_factory:requested metrics:question_factory:accepted metrics:question_factory:rejected metrics:question_factory:duplicate metrics:question_factory:verification_failed metrics:question_factory:difficulty_mismatch metrics:question_factory:difficulty_reassigned metrics:question_factory:diversity_rejected metrics:question_factory:distractor_failed metrics:question_factory:proposal_invalid metrics:question_factory:ai_unavailable metrics:question_factory:retry_scheduled metrics:question_factory:queue_deduped metrics:question_factory:latency_ms_sum metrics:question_factory:latency_samples metrics:question_factory:rejection_reasons
+
+
+
+
+
+
+
+
+
+
+
+$exclude = @(
+    ".env",
+    ".env.local",
+    ".env.production",
+    ".env.development",
+    "node_modules",
+    ".next",
+    "__pycache__",
+    ".git",
+    ".venv",
+    "venv",
+    "dist",
+    "build"
+)
+
+$files = Get-ChildItem -Recurse -File | Where-Object {
+    $path = $_.FullName
+
+    -not (
+        $exclude | Where-Object {
+            $path -match "(^|\\)$([regex]::Escape($_))(\\|$)"
+        }
+    ) -and
+
+    $_.Name -notmatch "^\.env" -and
+    $_.Extension -notin @(".pyc", ".log")
+}
+
+$files | Compress-Archive -DestinationPath "../QuantForge-review.zip" -Force
