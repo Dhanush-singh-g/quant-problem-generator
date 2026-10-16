@@ -1,0 +1,37 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+frontend/.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Runtime caches / generated data
+data/ai_cache/
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Celery scheduler state
+quantforge-beat*
+celerybeat-schedule*
+# TypeScript incremental cache
+*.tsbuildinfo
+
+# Browser verification outputs
+frontend/test-results/
+frontend/playwright-report/

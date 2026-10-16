@@ -1,0 +1,796 @@
+{
+  "domains": [
+    "Time, Speed & Distance",
+    "Work & Time",
+    "Pipes & Cisterns",
+    "Profit, Loss & Discount",
+    "Mixtures & Ratio",
+    "Age-Based Problems"
+  ],
+  "subdomains": {
+    "Time, Speed & Distance": [
+      "Linear",
+      "Average Speed",
+      "Relative Speed",
+      "Trains",
+      "Boats/Streams",
+      "Circular Track",
+      "Variable Speeds"
+    ],
+    "Work & Time": [
+      "Combined Work",
+      "Efficiency Change",
+      "Joining/Leaving",
+      "Shifts",
+      "Breakdowns"
+    ],
+    "Pipes & Cisterns": [
+      "Inlet/Outlet",
+      "Leakage",
+      "Timed Opening/Closing",
+      "Variable Flow"
+    ],
+    "Profit, Loss & Discount": [
+      "CP/SP/MP %",
+      "Successive Discount",
+      "Dishonest Shopkeeper",
+      "Multiple Items",
+      "GST",
+      "Partnerships"
+    ],
+    "Mixtures & Ratio": [
+      "Simple Mix",
+      "Replacement",
+      "Repeated Replacement",
+      "Ratio Adjustment",
+      "Alligation"
+    ],
+    "Age-Based Problems": [
+      "Ratios",
+      "Difference",
+      "Past/Future",
+      "Family Ages",
+      "Average Age Change"
+    ]
+  },
+  "templates": {
+    "Time, Speed & Distance": [
+      {
+        "template_id": "TSD_E_001_BasicDistance",
+        "difficulty": "easy",
+        "subdomain": "Linear",
+        "story_template": "A {vehicle_type} travels at {speed} km/h for {time} hours. How many kilometres does it cover?",
+        "variables": {
+          "vehicle_type": {
+            "type": "text",
+            "values": [
+              "car",
+              "bus",
+              "bike",
+              "delivery van"
+            ]
+          },
+          "speed": {
+            "type": "int",
+            "min": 20,
+            "max": 100,
+            "step": 5,
+            "unit": "km/h"
+          },
+          "time": {
+            "type": "float",
+            "min": 0.5,
+            "max": 8.0,
+            "step": 0.5,
+            "unit": "hours"
+          }
+        },
+        "solution_logic": "Direct substitution: distance = speed × time."
+      },
+      {
+        "template_id": "TSD_M_001_RelativeSpeedMeeting",
+        "difficulty": "medium",
+        "subdomain": "Relative Speed",
+        "story_template": "Two vehicles start {distance_apart} km apart and move directly toward each other at {speed1} km/h and {speed2} km/h. After how many hours will they meet?",
+        "variables": {
+          "distance_apart": {
+            "type": "int",
+            "min": 120,
+            "max": 600,
+            "step": 20,
+            "unit": "km"
+          },
+          "speed1": {
+            "type": "int",
+            "min": 30,
+            "max": 90,
+            "step": 5,
+            "unit": "km/h"
+          },
+          "speed2": {
+            "type": "int",
+            "min": 20,
+            "max": 80,
+            "step": 5,
+            "unit": "km/h"
+          }
+        },
+        "solution_logic": "Compute opposite-direction relative speed, then time = distance / relative speed."
+      },
+      {
+        "template_id": "TSD_H_001_TrainCrossPlatform",
+        "difficulty": "hard",
+        "subdomain": "Trains",
+        "story_template": "A train {train_length} m long moves at {speed} km/h and must completely cross a platform {platform_length} m long. How many seconds does the crossing take?",
+        "variables": {
+          "train_length": {
+            "type": "int",
+            "min": 120,
+            "max": 420,
+            "step": 20,
+            "unit": "m"
+          },
+          "platform_length": {
+            "type": "int",
+            "min": 100,
+            "max": 500,
+            "step": 20,
+            "unit": "m"
+          },
+          "speed": {
+            "type": "int",
+            "min": 36,
+            "max": 108,
+            "step": 9,
+            "unit": "km/h"
+          }
+        },
+        "solution_logic": "Add train and platform lengths, convert km/h to m/s, then divide total distance by speed."
+      }
+    ],
+    "Work & Time": [
+      {
+        "template_id": "WT_E_001_WorkCompletedPercent",
+        "difficulty": "easy",
+        "subdomain": "Work Rate",
+        "story_template": "A worker can complete a job alone in {total_time} days. If the worker works at the same rate for {days_worked} days, what percentage of the job is completed?",
+        "variables": {
+          "total_time": {
+            "type": "int",
+            "min": 6,
+            "max": 30,
+            "unit": "days"
+          },
+          "days_worked": {
+            "type": "int",
+            "min": 1,
+            "max": 10,
+            "unit": "days"
+          }
+        },
+        "solution_logic": "Use work fraction = days worked / total days and convert to a percentage."
+      },
+      {
+        "template_id": "WT_M_001_CombinedWorkTwoPeople",
+        "difficulty": "medium",
+        "subdomain": "Combined Work",
+        "story_template": "{person1_name} can complete a task in {person1_time} days and {person2_name} can complete it in {person2_time} days. If they work together at constant rates, how many days will the task take?",
+        "variables": {
+          "person1_name": {
+            "type": "text",
+            "values": [
+              "Alice",
+              "Bob",
+              "Charlie",
+              "David"
+            ]
+          },
+          "person2_name": {
+            "type": "text",
+            "values": [
+              "Eve",
+              "Frank",
+              "Grace",
+              "Heidi"
+            ]
+          },
+          "person1_time": {
+            "type": "int",
+            "min": 6,
+            "max": 30,
+            "unit": "days"
+          },
+          "person2_time": {
+            "type": "int",
+            "min": 6,
+            "max": 30,
+            "unit": "days"
+          }
+        },
+        "solution_logic": "Add individual work rates and invert the combined rate."
+      },
+      {
+        "template_id": "WT_H_001_JoinLeave",
+        "difficulty": "hard",
+        "subdomain": "Joining/Leaving",
+        "story_template": "Worker A can finish a job in {person1_time} days and worker B in {person2_time} days. They work together for {together_days} days, after which A leaves and B finishes the remaining work alone. How many days in total does the job take?",
+        "variables": {
+          "person1_time": {
+            "type": "int",
+            "min": 12,
+            "max": 36,
+            "unit": "days"
+          },
+          "person2_time": {
+            "type": "int",
+            "min": 12,
+            "max": 40,
+            "unit": "days"
+          },
+          "together_days": {
+            "type": "int",
+            "min": 1,
+            "max": 6,
+            "unit": "days"
+          }
+        },
+        "solution_logic": "Compute work done together, subtract from one whole job, then use B's rate for the remainder and add elapsed time."
+      }
+    ],
+    "Pipes & Cisterns": [
+      {
+        "template_id": "PC_E_001_SingleInletPercent",
+        "difficulty": "easy",
+        "subdomain": "Inlet",
+        "story_template": "A pipe can fill an empty tank in {fill_time} hours. If it is left open for {open_hours} hours at the same rate, what percentage of the tank is filled?",
+        "variables": {
+          "fill_time": {
+            "type": "int",
+            "min": 5,
+            "max": 20,
+            "unit": "hours"
+          },
+          "open_hours": {
+            "type": "int",
+            "min": 1,
+            "max": 8,
+            "unit": "hours"
+          }
+        },
+        "solution_logic": "Use filled fraction = open time / full fill time and convert to a percentage."
+      },
+      {
+        "template_id": "PC_M_001_TwoInlets",
+        "difficulty": "medium",
+        "subdomain": "Inlet/Outlet",
+        "story_template": "Pipe A fills a tank in {pipe1_fill_time} hours and pipe B fills it in {pipe2_fill_time} hours. If both are opened together, how many hours are needed to fill the tank?",
+        "variables": {
+          "pipe1_fill_time": {
+            "type": "int",
+            "min": 4,
+            "max": 18,
+            "unit": "hours"
+          },
+          "pipe2_fill_time": {
+            "type": "int",
+            "min": 4,
+            "max": 18,
+            "unit": "hours"
+          }
+        },
+        "solution_logic": "Add the two inlet rates and invert the net rate."
+      },
+      {
+        "template_id": "PC_H_001_TwoInletsOutlet",
+        "difficulty": "hard",
+        "subdomain": "Inlet/Outlet",
+        "story_template": "Two inlet pipes can fill a tank separately in {pipe1_fill_time} hours and {pipe2_fill_time} hours. An outlet can empty a full tank in {outlet_time} hours. If all three are opened together from an empty tank, how many hours will the tank take to fill?",
+        "variables": {
+          "pipe1_fill_time": {
+            "type": "int",
+            "min": 5,
+            "max": 20,
+            "unit": "hours"
+          },
+          "pipe2_fill_time": {
+            "type": "int",
+            "min": 5,
+            "max": 20,
+            "unit": "hours"
+          },
+          "outlet_time": {
+            "type": "int",
+            "min": 8,
+            "max": 40,
+            "unit": "hours"
+          }
+        },
+        "solution_logic": "Add inlet rates, subtract the outlet rate, verify positive net flow, then invert."
+      }
+    ],
+    "Profit, Loss & Discount": [
+      {
+        "template_id": "PLD_E_001_BasicProfitLossPercent",
+        "difficulty": "easy",
+        "subdomain": "CP/SP/MP %",
+        "story_template": "An {item_type} costs ${cost_price} and is sold for ${selling_price}. What is the profit or loss percentage, measured on cost price?",
+        "variables": {
+          "item_type": {
+            "type": "text",
+            "values": [
+              "book",
+              "toy",
+              "bicycle",
+              "watch"
+            ]
+          },
+          "cost_price": {
+            "type": "int",
+            "min": 100,
+            "max": 1200,
+            "step": 20,
+            "unit": "USD"
+          },
+          "selling_price": {
+            "type": "int",
+            "min": 80,
+            "max": 1400,
+            "step": 20,
+            "unit": "USD"
+          }
+        },
+        "solution_logic": "Find SP − CP, take its magnitude, divide by CP, then convert to a percentage."
+      },
+      {
+        "template_id": "PLD_M_001_SuccessiveDiscount",
+        "difficulty": "medium",
+        "subdomain": "Successive Discount",
+        "story_template": "An item is marked at ${marked_price}. A store applies a {discount1}% discount and then an additional {discount2}% discount on the reduced price. What is the final selling price?",
+        "variables": {
+          "marked_price": {
+            "type": "int",
+            "min": 500,
+            "max": 5000,
+            "step": 100,
+            "unit": "USD"
+          },
+          "discount1": {
+            "type": "int",
+            "min": 5,
+            "max": 30,
+            "step": 5,
+            "unit": "%"
+          },
+          "discount2": {
+            "type": "int",
+            "min": 5,
+            "max": 25,
+            "step": 5,
+            "unit": "%"
+          }
+        },
+        "solution_logic": "Apply the first discount multiplicatively, then apply the second discount to the reduced price."
+      },
+      {
+        "template_id": "PLD_H_001_MarkupSuccessiveDiscountProfit",
+        "difficulty": "hard",
+        "subdomain": "Multiple Items",
+        "story_template": "A retailer buys an item for ${cost_price}, marks it up by {markup}% and then offers successive discounts of {discount1}% and {discount2}% on the marked price. What is the resulting profit or loss percentage on cost price?",
+        "variables": {
+          "cost_price": {
+            "type": "int",
+            "min": 500,
+            "max": 5000,
+            "step": 100,
+            "unit": "USD"
+          },
+          "markup": {
+            "type": "int",
+            "min": 20,
+            "max": 80,
+            "step": 5,
+            "unit": "%"
+          },
+          "discount1": {
+            "type": "int",
+            "min": 5,
+            "max": 30,
+            "step": 5,
+            "unit": "%"
+          },
+          "discount2": {
+            "type": "int",
+            "min": 5,
+            "max": 25,
+            "step": 5,
+            "unit": "%"
+          }
+        },
+        "solution_logic": "Compute marked price from markup, apply both discounts multiplicatively, then compare final SP with CP and express the difference as a percentage of CP."
+      }
+    ],
+    "Mixtures & Ratio": [
+      {
+        "template_id": "MR_E_001_ComponentQuantity",
+        "difficulty": "easy",
+        "subdomain": "Simple Mix",
+        "story_template": "A {total_quantity}-liter mixture contains {item1_name} and {item2_name} in the ratio {ratio1}:{ratio2}. How many liters of {item1_name} are present?",
+        "variables": {
+          "item1_name": {
+            "type": "text",
+            "values": [
+              "milk",
+              "alcohol",
+              "juice",
+              "concentrate"
+            ]
+          },
+          "item2_name": {
+            "type": "text",
+            "values": [
+              "water",
+              "syrup",
+              "soda",
+              "diluent"
+            ]
+          },
+          "total_quantity": {
+            "type": "int",
+            "min": 20,
+            "max": 200,
+            "step": 10,
+            "unit": "liters"
+          },
+          "ratio1": {
+            "type": "int",
+            "min": 1,
+            "max": 8
+          },
+          "ratio2": {
+            "type": "int",
+            "min": 1,
+            "max": 8
+          }
+        },
+        "solution_logic": "Take the requested ratio part over total ratio parts and multiply by total quantity."
+      },
+      {
+        "template_id": "MR_M_001_RatioAdjustment",
+        "difficulty": "medium",
+        "subdomain": "Ratio Adjustment",
+        "story_template": "A mixture contains {item1_name} and {item2_name} in the ratio {initial_ratio_part1}:{initial_ratio_part2}. After {added_quantity} liters of {item1_name} is added, the ratio becomes {final_ratio_part1}:{final_ratio_part2}. What was the initial total quantity of the mixture?",
+        "variables": {
+          "item1_name": {
+            "type": "text",
+            "values": [
+              "milk",
+              "alcohol",
+              "juice",
+              "concentrate"
+            ]
+          },
+          "item2_name": {
+            "type": "text",
+            "values": [
+              "water",
+              "syrup",
+              "soda",
+              "diluent"
+            ]
+          },
+          "initial_ratio_part1": {
+            "type": "int",
+            "min": 1,
+            "max": 8
+          },
+          "initial_ratio_part2": {
+            "type": "int",
+            "min": 1,
+            "max": 8
+          },
+          "added_quantity": {
+            "type": "int",
+            "min": 5,
+            "max": 50,
+            "step": 5,
+            "unit": "liters"
+          },
+          "final_ratio_part1": {
+            "type": "int",
+            "min": 2,
+            "max": 14
+          },
+          "final_ratio_part2": {
+            "type": "int",
+            "min": 1,
+            "max": 8
+          }
+        },
+        "solution_logic": "Represent initial components with a common multiplier, apply the added amount, then solve the final-ratio equation for the original total."
+      },
+      {
+        "template_id": "MR_H_001_RepeatedReplacement",
+        "difficulty": "hard",
+        "subdomain": "Repeated Replacement",
+        "story_template": "A vessel contains {vessel_capacity} liters of pure liquid. Each time, {replaced_quantity} liters is removed and replaced with water. This operation is repeated {repetitions} times. How many liters of the original liquid remain?",
+        "variables": {
+          "vessel_capacity": {
+            "type": "int",
+            "min": 30,
+            "max": 120,
+            "step": 10,
+            "unit": "liters"
+          },
+          "replaced_quantity": {
+            "type": "int",
+            "min": 5,
+            "max": 30,
+            "step": 5,
+            "unit": "liters"
+          },
+          "repetitions": {
+            "type": "int",
+            "min": 2,
+            "max": 4
+          }
+        },
+        "solution_logic": "Use repeated-replacement retention: initial × (1 − removed/total)^n."
+      }
+    ],
+    "Age-Based Problems": [
+      {
+        "template_id": "ABP_E_001_FutureAge",
+        "difficulty": "easy",
+        "subdomain": "Past/Future",
+        "story_template": "{person_name} is currently {current_age} years old. How old will {person_name} be after {years_future} years?",
+        "variables": {
+          "person_name": {
+            "type": "text",
+            "values": [
+              "Ram",
+              "Sita",
+              "Arjun",
+              "Meera"
+            ]
+          },
+          "current_age": {
+            "type": "int",
+            "min": 10,
+            "max": 60,
+            "unit": "years"
+          },
+          "years_future": {
+            "type": "int",
+            "min": 2,
+            "max": 15,
+            "unit": "years"
+          }
+        },
+        "solution_logic": "Add the future interval to the current age."
+      },
+      {
+        "template_id": "ABP_M_001_FutureRatio",
+        "difficulty": "medium",
+        "subdomain": "Ratios",
+        "story_template": "{person1_name} is {person1_age} years old and {person2_name} is {person2_age} years old. What will be the simplified ratio of their ages after {years_future} years?",
+        "variables": {
+          "person1_name": {
+            "type": "text",
+            "values": [
+              "Ram",
+              "Sita",
+              "Laxman",
+              "Bharat"
+            ]
+          },
+          "person2_name": {
+            "type": "text",
+            "values": [
+              "Gita",
+              "Hari",
+              "Shyam",
+              "Radha"
+            ]
+          },
+          "person1_age": {
+            "type": "int",
+            "min": 12,
+            "max": 60,
+            "unit": "years"
+          },
+          "person2_age": {
+            "type": "int",
+            "min": 10,
+            "max": 55,
+            "unit": "years"
+          },
+          "years_future": {
+            "type": "int",
+            "min": 2,
+            "max": 15,
+            "unit": "years"
+          }
+        },
+        "solution_logic": "Find both future ages and reduce their ratio using the greatest common divisor."
+      },
+      {
+        "template_id": "ABP_H_001_DifferenceFutureMultiple",
+        "difficulty": "hard",
+        "subdomain": "Difference",
+        "story_template": "{older_name} is {age_difference} years older than {younger_name}. After {years_future} years, {older_name} will be {future_multiple} times as old as {younger_name}. What is {younger_name}'s current age?",
+        "variables": {
+          "older_name": {
+            "type": "text",
+            "values": [
+              "Asha",
+              "Ravi",
+              "Mohan",
+              "Priya"
+            ]
+          },
+          "younger_name": {
+            "type": "text",
+            "values": [
+              "Kiran",
+              "Neha",
+              "Aman",
+              "Diya"
+            ]
+          },
+          "age_difference": {
+            "type": "int",
+            "min": 20,
+            "max": 50,
+            "step": 5,
+            "unit": "years"
+          },
+          "years_future": {
+            "type": "int",
+            "min": 2,
+            "max": 10,
+            "unit": "years"
+          },
+          "future_multiple": {
+            "type": "int",
+            "min": 2,
+            "max": 3
+          }
+        },
+        "solution_logic": "Form two linked age equations using the constant age difference and the future multiple, then solve backward for the younger person's current age."
+      }
+    ]
+  },
+  "variable_constraints": {
+    "Time, Speed & Distance": {
+      "speed": "Must be > 0",
+      "time": "Must be > 0",
+      "distance": "Must be > 0",
+      "relative_speed": "Must be non-zero for distinct events (e.g., meeting, crossing).",
+      "boat_speed_still_water": "Must be > stream_speed for upstream travel."
+    },
+    "Work & Time": {
+      "individual_time": "Must be > 0",
+      "work_rate": "Must be > 0 (unless specified as destructive work).",
+      "combined_time": "Must be > 0 and typically less than the smallest individual time (for positive work rates).",
+      "number_of_workers": "Must be a positive integer."
+    },
+    "Pipes & Cisterns": {
+      "fill_time": "Must be > 0",
+      "drain_time": "Must be > 0",
+      "tank_capacity": "Must be > 0",
+      "net_flow_rate": "Must be > 0 for filling, < 0 for emptying, and non-zero for a finite solution."
+    },
+    "Profit, Loss & Discount": {
+      "cost_price": "Must be > 0",
+      "selling_price": "Must be > 0",
+      "marked_price": "Must be > 0",
+      "percentage": "Profit/Loss/Discount percentages should be in a reasonable range (e.g., typically 0-100% for discounts, and realistic ranges for profit/loss)."
+    },
+    "Mixtures & Ratio": {
+      "quantity": "Must be > 0 for all components and the total mixture.",
+      "ratio_parts": "Must be > 0 integers.",
+      "concentration": "Must be between 0% and 100% inclusive.",
+      "replacement_quantity": "Must be > 0 and less than or equal to the total mixture quantity."
+    },
+    "Age-Based Problems": {
+      "age": "Must be a positive integer (> 0).",
+      "years_past_future": "Can be positive (future) or negative (past), but resulting ages must remain positive."
+    }
+  },
+  "formula_sets": {
+    "Time, Speed & Distance": [
+      "Distance = Speed * Time",
+      "Speed = Distance / Time",
+      "Time = Distance / Speed",
+      "Relative Speed (Same Direction) = |S1 - S2|",
+      "Relative Speed (Opposite Direction) = S1 + S2",
+      "Average Speed = Total Distance / Total Time",
+      "Time for Train to Cross (Length L_T, Speed S_T) a stationary object (Length L_O) = (L_T + L_O) / S_T",
+      "Upstream Speed = Boat Speed - Stream Speed",
+      "Downstream Speed = Boat Speed + Stream Speed"
+    ],
+    "Work & Time": [
+      "Work Rate = 1 / Time Taken",
+      "Work = Rate * Time",
+      "Combined Rate = Sum of Individual Rates",
+      "Time Taken (Combined) = 1 / Combined Rate",
+      "(M1 * D1 * H1) / W1 = (M2 * D2 * H2) / W2 (Man-Days Formula)"
+    ],
+    "Pipes & Cisterns": [
+      "Rate of Inlet Pipe = +1 / Time to Fill",
+      "Rate of Outlet Pipe = -1 / Time to Empty",
+      "Net Flow Rate = Sum of all (Inlet Rates + Outlet Rates)",
+      "Time to Fill/Empty Tank = Total Capacity (usually 1 unit) / Net Flow Rate"
+    ],
+    "Profit, Loss & Discount": [
+      "Profit = Selling Price (SP) - Cost Price (CP)",
+      "Loss = CP - SP",
+      "Profit % = (Profit / CP) * 100",
+      "Loss % = (Loss / CP) * 100",
+      "SP = CP * (1 + Profit%/100)",
+      "SP = CP * (1 - Loss%/100)",
+      "Discount = Marked Price (MP) - SP",
+      "Discount % = (Discount / MP) * 100",
+      "SP = MP * (1 - Discount%/100)",
+      "Equivalent Discount for Successive Discounts D1, D2 = D1 + D2 - (D1 * D2 / 100)"
+    ],
+    "Mixtures & Ratio": [
+      "Ratio A:B = Quantity A / Quantity B",
+      "Quantity of component in new mixture = (Q1*C1 + Q2*C2) / (Q1+Q2)",
+      "Alligation Rule: Ratio of quantities Q1/Q2 = (C2 - Cm) / (Cm - C1) where C is concentration and Cm is mean concentration.",
+      "Replacement Formula: Final Quantity of a component = Initial Quantity * (1 - Replaced Volume / Total Volume)^n (where n is number of replacements)"
+    ],
+    "Age-Based Problems": [
+      "Age in Future = Current Age + Years",
+      "Age in Past = Current Age - Years",
+      "Difference in ages between two people remains constant over time.",
+      "Sum of ages changes by (Number of people * Years) over time.",
+      "Solve using linear equations based on given ratios or differences."
+    ]
+  },
+  "impossible_conditions": {
+    "Time, Speed & Distance": [
+      "Negative or zero values for speed, time, or distance.",
+      "Boat speed in still water is less than or equal to stream speed when moving upstream.",
+      "Time taken to cover a positive distance is zero."
+    ],
+    "Work & Time": [
+      "Negative or zero time for an individual or group to complete a task.",
+      "A combined positive work rate results in infinite time (e.g., one person's positive rate cancelled by another's negative rate exactly).",
+      "One person 'completes' work in less than zero days."
+    ],
+    "Pipes & Cisterns": [
+      "Negative or zero time for a pipe to fill or empty.",
+      "Total inflow rate is less than or equal to total outflow rate when the problem expects the tank to be filled.",
+      "Tank capacity is negative or zero."
+    ],
+    "Profit, Loss & Discount": [
+      "Negative or zero Cost Price (CP), Selling Price (SP), or Marked Price (MP).",
+      "Discount percentage exceeding 100% (implies paying the customer).",
+      "Profit/Loss percentage resulting in an impossible SP (e.g., negative SP)."
+    ],
+    "Mixtures & Ratio": [
+      "Negative or zero quantity for any liquid or component.",
+      "Ratio parts being zero or negative.",
+      "Concentration values outside the 0-100% range.",
+      "Attempting to remove more liquid than present in the mixture."
+    ],
+    "Age-Based Problems": [
+      "Resulting age for any person is negative or zero.",
+      "Contradictory age statements (e.g., A is older than B, but B's age in the future becomes greater than A's, contradicting the age difference).",
+      "A person's age is decreasing over time (unless specified for a specific context like biological age vs. calendar age)."
+    ]
+  },
+  "mcq_distractor_rules": [
+    "Arithmetic slips (e.g., addition instead of subtraction, incorrect multiplication/division).",
+    "Swapped values (e.g., using A's efficiency for B, upstream for downstream speed).",
+    "Incorrect unit conversion (e.g., not converting hours to minutes, km/h to m/s).",
+    "Wrong percentage base (e.g., calculating profit/loss percentage on SP instead of CP).",
+    "Incorrect ratio application (e.g., inverting the ratio, calculating one part instead of the total).",
+    "Wrong relative speed direction (e.g., adding speeds for same direction, subtracting for opposite).",
+    "Incorrect mixture replacement formula application (e.g., forgetting exponent 'n').",
+    "Ignoring specific problem conditions (e.g., a pipe closing midway, a worker leaving).",
+    "Calculating an intermediate value instead of the final requested answer.",
+    "Common misconceptions or simplified approaches (e.g., averaging times in work & time problems instead of using rates)."
+  ]
+}
