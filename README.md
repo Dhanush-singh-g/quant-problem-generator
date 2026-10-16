@@ -39,6 +39,7 @@ Python generates questions from **21 reviewed quantitative models** and a curate
 | Location | Responsibility |
 | --- | --- |
 | `frontend/` | Next.js UI and same-origin API proxy |
+| `backend/migrations/` | Ordered, checksum-verified database upgrades |
 | `backend/app/` | FastAPI routes, authentication, persistence, Celery jobs |
 | `core/` | Quantitative models, canonical solver, independent verifier |
 | `services/` | Publication validation, controlled AI context, supporting services |

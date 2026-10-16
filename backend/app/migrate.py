@@ -7,7 +7,7 @@ from sqlalchemy import inspect, text
 from .core.db import Base, engine
 from . import models
 
-ROOT = Path(__file__).resolve().parents[2]
+MIGRATIONS_DIR = Path(__file__).resolve().parents[1] / "migrations"
 MIGRATIONS = (
     "MIGRATION_HARDENING.sql", "MIGRATION_VARIANTS.sql", "MIGRATION_FINAL_PASS.sql",
     "MIGRATION_PRACTICE_MODE.sql", "MIGRATION_GENERATION_BATCHES.sql", "MIGRATION_APPLICATION.sql",
@@ -21,7 +21,7 @@ def migrate(target=engine):
             Base.metadata.create_all(connection)
         connection.exec_driver_sql("CREATE TABLE IF NOT EXISTS schema_migrations (name TEXT PRIMARY KEY, checksum VARCHAR(64) NOT NULL, applied_at TIMESTAMP NOT NULL DEFAULT NOW())")
         for name in MIGRATIONS:
-            sql = (ROOT / name).read_text(encoding="utf-8")
+            sql = (MIGRATIONS_DIR / name).read_text(encoding="utf-8")
             checksum = hashlib.sha256(sql.encode()).hexdigest()
             stored = connection.execute(text("SELECT checksum FROM schema_migrations WHERE name=:name"), {"name": name}).scalar()
             if stored:

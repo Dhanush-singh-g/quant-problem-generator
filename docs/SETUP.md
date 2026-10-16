@@ -77,7 +77,7 @@ Run `npm run dev` in `frontend/`. Its proxy defaults to `http://127.0.0.1:8000`;
 
 ## Existing database upgrades
 
-Back up first; stop old API/workers/scheduler. Run `python -m app.migrate` from `backend/` using the intended database configuration. Do not modify applied SQL migration files: their checksums are recorded.
+Back up first; stop old API/workers/scheduler. Run `python -m app.migrate` from `backend/` using the intended database configuration. SQL migrations live in `backend/migrations/`. Keep their filenames and contents unchanged: applied names and checksums are recorded.
 
 Run `python -m app.audit_inventory` for a report, then `python -m app.audit_inventory --apply` in maintenance mode to approve supported inventory and quarantine invalid/duplicate items. Historical records are retained. Resubmit any old untracked generation requests. Restart services and verify before reopening access.
 

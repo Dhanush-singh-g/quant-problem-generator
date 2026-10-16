@@ -179,7 +179,7 @@ def test_batch_api_persists_work_even_when_broker_is_down(db, monkeypatch):
 
 
 def test_migration_is_repeatable(db):
-    sql = (Path(__file__).resolve().parents[1] / "MIGRATION_GENERATION_BATCHES.sql").read_text()
+    sql = (Path(__file__).resolve().parents[1] / "backend" / "migrations" / "MIGRATION_GENERATION_BATCHES.sql").read_text()
     for _ in range(2):
         with db.bind.connect() as connection:
             connection.exec_driver_sql(sql)
